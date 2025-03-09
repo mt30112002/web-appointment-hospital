@@ -6,8 +6,13 @@ let router = express.Router()
 let webRoute = (app) => {
     router.get("/", homeController.homeController)
     router.get("/about", homeController.aboutController)
+
+
     router.get("/crud", homeController.getCRUD)
     router.post("/post-crud", homeController.postCRUD)
+    router.get("/get-crud", homeController.displayGetCRUD)
+
+
     return app.use("/", router)
 }
 
