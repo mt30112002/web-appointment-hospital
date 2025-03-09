@@ -21,6 +21,9 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      address: {
+        type: Sequelize.STRING
+      },
       phoneNumber: {
         type: Sequelize.STRING
       },
@@ -30,13 +33,10 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
-      address: {
+      roleID: {
         type: Sequelize.STRING
       },
-      typeRole: {
-        type: Sequelize.STRING
-      },
-      keyRole: {
+      positionID: {
         type: Sequelize.STRING
       },
       createdAt: {

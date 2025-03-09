@@ -1,5 +1,8 @@
 import express from "express"
 import db from "../models/index"
+import bodyParser from "body-parser"
+import CRUDservice from "../services/CRUDservice"
+
 
 let homeController = async (req, res) => {
     try {
@@ -14,11 +17,23 @@ let homeController = async (req, res) => {
     }
 }
 
+let getCRUD = (req, res) => {
+    return res.render("crud")
+}
+
+let postCRUD = async (req, res) => {
+    let data = await CRUDservice.createNewUser(req.body)
+    console.log(data)
+    return res.send("post crud success")
+}
+
 let aboutController = (req, res) => {
     return res.render("about")
 }
 
 module.exports = {
     homeController: homeController,
-    aboutController: aboutController
+    aboutController: aboutController,
+    getCRUD: getCRUD,
+    postCRUD: postCRUD
 }
