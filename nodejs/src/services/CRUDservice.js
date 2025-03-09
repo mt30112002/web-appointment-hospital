@@ -27,7 +27,7 @@ let createNewUser = async (data) => {
                 address: data.address,
                 phoneNumber: data.phoneNumber,
                 gender: data.gender === "1" ? true : false,
-                roleID: data.role,
+                roleID: "R" + data.role,
             })
             resolve("Create user successfully")
         } catch (error) {
@@ -48,9 +48,62 @@ let getAllUser = () => {
         }
     })
 }
+let getUserById = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id },
+                raw: true
+            })
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let updateUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (data.password && data.password !== data.currentPassword) {
+                let hashPassword = await hashUserPassword(data.password)
+                data.password = hashPassword
+            }
+            let user = await db.User.update(
+                {
+                    roleID: "R" + data.role,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phoneNumber: data.phoneNumber,
+                    gender: data.gender === "1" ? true : false,
+                    email: data.email,
+                    password: data.password,
+                }, { where: { id: data.id } })
+            resolve(user)
+        } catch (error) {
+            reject(error) 
+        }
+    })
+}
+
+let deleteUser = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.User.destroy({ where: { id: id } })
+            resolve("Delete user successfully")
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports = {
     createNewUser,
-    getAllUser
+    getAllUser,
+    getUserById,
+    updateUser,
+    deleteUser
 };
 
